@@ -1,28 +1,33 @@
 # Music Streaming Churn & Fairness Audit
-This project was developed as part of my Responsible Data Science course at NYU, where my partner and I audited a predictive model designed for a fictional streaming service, PlaylistPro. The goal was to go beyond raw predictive accuracy and examine the ethical implications of using an Algorithmic Decision-Support System (ADS) to allocate financial retention discounts. Please note that this project is still in progress!
+This project was developed as part of the DS-UA 202: Responsible Data Science course. My partner and I audited an algorithmic decision-support system (ADS) used by a fictional streaming service, PlaylistPro, to predict customer churn and target retention discounts.
+
+The goal was to go beyond raw predictive accuracy and examine the ethical and business implications of using a PyTorch Multi-Layer Perceptron (MLP) to allocate direct financial interventions to 125,000 synthetic users.
 
 ## Project Questions
 - Can a PyTorch-based Neural Network accurately predict which subscribers are at risk of churning?
-- Does the model disproportionately exclude specific demographic groups (based on age or location) from receiving financial incentives?
-- What are the ethical trade-offs between high precision (avoiding wasted budget) and high recall (ensuring all at-risk users get a discount)?
+- Does the model disproportionately exclude specific demographic groups (e.g., Gen X) or subscription tiers (e.g., Premium vs. Free) from receiving financial incentives?
+- What are the downstream financial impacts and ethical trade-offs when a model prioritizes aggregate accuracy over equitable False Negative Rates (FNR)?
 
 ## Tools & Libraries
 - Python
 - PyTorch (Neural Network Modeling)
 - Pandas, NumPy
 - Matplotlib, Seaborn
-- Scikit-learn (Preprocessing & Evaluation)
+- Scikit-learn (Preprocessing, Evaluation, & Feature Importance)
 
 ## Key Insights
-- Intervention Bias: We identified that false negatives in churn prediction aren't just "missed data"—they result in the economic exclusion of users from promotional benefits.
-- Model Architecture: A Multi-Layer-Perceptron (MLP) effectively processed behavioral data (skip rates, listening hours) but required careful tuning to balance fairness across age groups.
-- Fairness vs Profit: We explored how standard business optimizations for "Customer Lifetime Value" can inadvertently create disparate impacts if demographic features are not audited for bias.
+- The Accuracy Illusion: While the baseline MLP achieved strong aggregate performance (84.1% accuracy), these top-level metrics masked severe demographic disparities.
+- Subscription Tier Bias: The model severely under-identified churn among paid tiers. The False Negative Rate (FNR)—which represents a "missed churner" structurally denied a discount—was only 3.6% for Free users but jumped to 23.9% for Premium users.
+- Intersectional Harm: Compounding biases created massive disparities. The most favored subgroup (Gen Z - Free) saw an FNR of just 1.7%, while the most harmed subgroup (Millennials - Premium) faced an FNR of 30.4%, representing a >17x disparity in predictive error.
+- Proxy Discrimination: Permutation Feature Importance revealed the model relied heavily on behavioral proxies like customer_service_inquiries and weekly_hours. These features inadvertently penalized busy adults, functioning as proxies for age and income.
 
 ## Files
-- `streaming_churn_rate.ipynb`: Main technical notebook (EDA, PyTorch model, and Audit)
-- `RDS Final Project Audit Slides.pdf`: High-level summary of initial findings and ethical considerations
-- `Group87_DraftReport.pdf`: Detailed analysis of the ADS framework and data ethics
+- `streaming_churn_rate.ipynb`: Main technical notebook (EDA, PyTorch model, and FairnessAudit)
+- `PlaylistPro_Final_Audit_Deck.pdf`: High-level presentation deck summarizing our findings, the dataset's domain mismatch, and ethical considerations
+- `Final_Report_RDS_Course_Project.pdf`: Detailed 9-page analysis of the ADS framework, fairness metrics, and deployment recommendations
 
 ## Next Steps
-- Implement specific fairness constraints (like Equalized Odds) directly into the PyTorch loss function.
-- Conduct a longitudinal study to see if retention discounts actually change long-term user behavior across different demographics.
+- Shift from single static data snapshots to collecting longitudinal engagement trajectories to better capture actual churn intent.
+- Apply subgroup-aware calibration to equalize the False Negative Rate (FNR) across age groups and subscription tiers during pilot deployments.
+- Reduce proxy dependence on subscription-tier variables through fairness-aware modeling, such as implementing revenue-aware loss functions.
+- Implement regular re-auditing backed by intersectional fairness dashboards to monitor demographic drift over time.
