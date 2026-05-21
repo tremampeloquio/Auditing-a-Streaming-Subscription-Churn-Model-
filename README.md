@@ -22,8 +22,8 @@ The goal was to go beyond raw predictive accuracy and examine the ethical and bu
 - Proxy Discrimination: Permutation Feature Importance revealed the model relied heavily on behavioral proxies like customer_service_inquiries and weekly_hours. These features inadvertently penalized busy adults, functioning as proxies for age and income.
 
 ## Files
-- `streaming_churn_rate.ipynb`: Main technical notebook (EDA, PyTorch model, and FairnessAudit)
-- `PlaylistPro_Final_Audit_Deck.pdf`: High-level presentation deck summarizing our findings, the dataset's domain mismatch, and ethical considerations
+- `Streaming_Churn_Rate_Notebook_Updated.ipynb`: Main technical notebook (EDA, PyTorch model, and FairnessAudit)
+- `PlaylistPro_ Algorithmic Churn Audit Slides.pdf`: High-level presentation deck summarizing our findings, the dataset's domain mismatch, and ethical considerations
 - `Final_Report_RDS_Course_Project.pdf`: Detailed 9-page analysis of the ADS framework, fairness metrics, and deployment recommendations
 
 ## Next Steps
